@@ -1,7 +1,6 @@
 import sublime, sublime_plugin, shelve
 
 DOXA_ICON = ""
-# DOXA_FLAGS = sublime.PERSISTENT
 DOXA_FLAGS = sublime.PERSISTENT
 DOXA_TAG_TO_SCOPE = {
 	"judge": "string",
