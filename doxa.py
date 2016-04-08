@@ -1,6 +1,4 @@
-import sublime, sublime_plugin, shelve, mdpopups
-
-tagshelves = {}
+import sublime, sublime_plugin, shelve
 
 DOXA_ICON = ""
 # DOXA_FLAGS = sublime.PERSISTENT
@@ -12,11 +10,13 @@ DOXA_TAG_TO_SCOPE = {
 }
 DOXA_TAGS = [k for k in DOXA_TAG_TO_SCOPE.keys()]
 
+tagshelves = {}
+
 class TagFileManager(sublime_plugin.EventListener):
 	def on_load(self, view):
 		filename = view.file_name()
 
-		# only do anything if TAGTEST present in file
+		# only do anything if TAGTEST present in filename
 		if "TAGTEST" in filename:
 			# open the shelve and save a reference to it in the global dictionary
 			tagshelve = shelve.open(filename + '.tags')
@@ -61,7 +61,7 @@ class DoxaTagRegion(sublime_plugin.TextCommand):
 			tagshelve[tag] = regions
 			tagshelve.sync()
 
-			# update ST session regions
+			# update regions in current ST session
 			v.add_regions(tag, regions, scope, DOXA_ICON, DOXA_FLAGS)
 
 			for tag, saved_regions in tagshelve.items():
